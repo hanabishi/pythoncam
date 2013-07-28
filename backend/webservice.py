@@ -1,4 +1,5 @@
 import os
+import sys
 import platform
 import cherrypy
 import logging
@@ -13,6 +14,14 @@ class Root(object):
             raise cherrypy.HTTPRedirect("index.html")
         else:
             return "Index.html not found"
+    
+    def set_camservice(self,camservice):
+        self.camservice=camservice
+    
+    @cherrypy.expose
+    def shutdown(self):
+        self.camservice.shutdown()
+        sys.exit(0)
 
 class WebService(object):
 
@@ -40,6 +49,6 @@ if __name__ == "__main__":
     ## Add more webservices when needed
     root = Root()
     root.webservice = WebService()
-    root.webservice.camservice = CamService()
+    root.webservice.camservice = CamService(root)
     
     cherrypy.quickstart(root, '/', config=config)
