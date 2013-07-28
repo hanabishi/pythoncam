@@ -12,7 +12,8 @@ from pygame.locals import *
 
 pygame.init()
 pygame.camera.init()
-cam = pygame.camera.Camera("/dev/video0")
+cams=pygame.camera.list_cameras()
+cam = pygame.camera.Camera(cams[0])
 cam.start()
 image = cam.get_image()
 pygame.image.save(image,"filename.jpg")
