@@ -1,5 +1,5 @@
 import cherrypy
-from cammodule import CamModule, get_camera_list, setup_pygame_camera
+from cammodulecv import CamModule, get_camera_list, setup_pygame_camera
 
 class CamService(object):
 
@@ -13,7 +13,7 @@ class CamService(object):
     @cherrypy.expose
     @cherrypy.tools.json_out()
     def get_cameras(self):
-        return {"cameraCount": 1}
+        return {"cameraCount": len(self.camera_list)}
 
 
     @cherrypy.expose

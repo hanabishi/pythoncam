@@ -1,6 +1,6 @@
 function updateCamera(cameraIndex) {
 	var timestamp=new Date().getTime();
-	$('#camera0').attr('src','webservice/camservice/get_image?cam_index='+cameraIndex+'&fake='+timestamp);
+	$('#camera'+cameraIndex).attr('src','webservice/camservice/get_image?cam_index='+cameraIndex+'&fake='+timestamp);
 }
 
 $(document).ready(function(){
