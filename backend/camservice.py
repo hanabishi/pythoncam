@@ -5,8 +5,8 @@ class CamService(object):
 
     @cherrypy.expose
     @cherrypy.tools.json_out()
-    def get_lost(self):
-        return {"getLost": "is a word"}
+    def get_cameras(self):
+        return {"cameras": [{"cameraname":"0", "cameraIndex":0}, {"cameraname":"/dev/youSuckSoHard", "cameraIndex":1}]}
 
 
     @cherrypy.expose
@@ -14,14 +14,3 @@ class CamService(object):
         cherrypy.response.headers['Content-Type'] = "image/jpg"
         return CamModule(int(cam_index)).get_bytes()
     
-    
-#    def index(self):
-#    surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
-#    
-#
-#    buffer = StringIO.StringIO()
-#    surface.write_to_png(buffer)
-#    buffer.seek(0)
-#
-#    return file_generator(buffer)
-
