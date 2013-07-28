@@ -13,7 +13,7 @@ class CamService(object):
     @cherrypy.expose
     @cherrypy.tools.json_out()
     def get_cameras(self):
-        return {"cameraCount": 1}
+        return {"cameraCount": len(get_camera_list())}
 
 
     @cherrypy.expose
