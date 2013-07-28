@@ -6,7 +6,7 @@ class CamService(object):
     @cherrypy.expose
     @cherrypy.tools.json_out()
     def get_cameras(self):
-        return {"cameras": [{"cameraname":"0", "cameraIndex":0}, {"cameraname":"/dev/youSuckSoHard", "cameraIndex":1}]}
+        return {"cameraCount": 1}
 
 
     @cherrypy.expose
