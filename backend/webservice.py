@@ -2,7 +2,7 @@ import os
 import platform
 import cherrypy
 import logging
-import cam
+from camservice import CamService
 #from cherrypy.process.plugins import Daemonizer, PIDFile
 
 class Root(object):
@@ -40,6 +40,6 @@ if __name__ == "__main__":
     ## Add more webservices when needed
     root = Root()
     root.webservice = WebService()
-    root.webservice.cam = cam.Cam()
+    root.webservice.camservice = CamService()
     
     cherrypy.quickstart(root, '/', config=config)
