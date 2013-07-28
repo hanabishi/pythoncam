@@ -2,34 +2,40 @@ import pygame
 import tempfile
 import os
 from pygame import camera
+from threading import Lock
 
-# from pygame.locals import *
+def get_camera_list():
+    return camera.list_cameras()
+
+def setup_pygame_camera():
+    pygame.init()
+    camera.init()
 
 class CamModule:
     
-    def __init__(self, index=0):
-        pygame.init()
-        camera.init()
-        self.cam_index = index
-        self.cam = camera.Camera(self.get_camera_list()[index])
+    def __init__(self, camera_name, camera_index):
+        self.cam_index = camera_index
+        self.cam = camera.Camera(camera_name)
         self.cam.start()
-        
-    def get_camera_list(self):
-        return camera.list_cameras()
+        self.lock = Lock()
         
     def __get_image(self):
         return self.cam.get_image()
         
     def get_bytes(self):
-        temp_file = os.path.join(tempfile.gettempdir(), "pycam%d.jpg" % self.cam_index)
-        
-        image = self.__get_image()
-        pygame.image.save(image, temp_file)
-        
         data = ""
-        with open(temp_file, "rb") as reader:
-            data = reader.read()
-        
-        os.remove(temp_file)
+        try:
+            self.lock.acquire()
+            temp_file = os.path.join(tempfile.gettempdir(), "pycam%d.jpg" % self.cam_index)
+            
+            image = self.__get_image()
+            pygame.image.save(image, temp_file)
+            
+            with open(temp_file, "rb") as reader:
+                data = reader.read()
+            
+            os.remove(temp_file)
+        finally:
+            self.lock.release()
         
         return data
