@@ -7,8 +7,8 @@ class CamService(object):
         self.camera_list = []
         setup_pygame_camera()
         camera_list = get_camera_list()
-        for camera_index in camera_list:
-            self.camera_list.append(CamModule(camera_list[camera_index], camera_index))
+        for camera_index, camera_name in enumerate(camera_list):
+            self.camera_list.append(CamModule(camera_name, camera_index))
 
     @cherrypy.expose
     @cherrypy.tools.json_out()
